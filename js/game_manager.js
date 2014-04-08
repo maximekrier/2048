@@ -51,9 +51,21 @@ GameManager.prototype.setup = function () {
 
 // Set up the initial tiles to start the game with
 GameManager.prototype.addStartTiles = function () {
-  for (var i = 0; i < this.startTiles; i++) {
-    this.addRandomTile();
-  }
+  var startCells = [{x:0,y:0},{x:3,y:3},{x:3,y:0},{x:0,y:3}];
+
+  this.addCheatedRandomTile(2048,startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
+  this.addCheatedRandomTile(128);
+  this.addCheatedRandomTile(32);
+  this.addCheatedRandomTile(2);
+};
+
+//adds a cheated tile in a random ( or not :p ) position
+GameManager.prototype.addCheatedRandomTile = function (value,pos) {
+    if(pos == undefined){
+      pos = this.grid.randomAvailableCell();
+    }
+    var tile = new Tile(pos, value);
+    this.grid.insertTile(tile);
 };
 
 // Adds a tile in a random position
@@ -139,8 +151,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty 2048 tile
-          if (merged.value === 2048) self.won = true;
+          // The mighty 16384 tile
+          if (merged.value === 16384) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
