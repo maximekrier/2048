@@ -55,7 +55,6 @@ GameManager.prototype.addStartTiles = function () {
   var startCells = [{x:0,y:0},{x:3,y:3},{x:3,y:0},{x:0,y:3}];
     
     this.addCheatedRandomTile(parseInt(localStorage.maxScore),startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
-    this.addCheatedRandomTile(2048);
     this.addCheatedRandomTile(128);
     this.addCheatedRandomTile(32);
     this.addCheatedRandomTile(2);
