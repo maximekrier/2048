@@ -54,7 +54,8 @@ GameManager.prototype.setup = function () {
 GameManager.prototype.addStartTiles = function () {
   var startCells = [{x:0,y:0},{x:3,y:3},{x:3,y:0},{x:0,y:3}];
     
-    this.addCheatedRandomTile(localStorage.maxScore,startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
+    this.addCheatedRandomTile(parseInt(localStorage.maxScore),startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
+    this.addCheatedRandomTile(2048);
     this.addCheatedRandomTile(128);
     this.addCheatedRandomTile(32);
     this.addCheatedRandomTile(2);
@@ -137,7 +138,6 @@ GameManager.prototype.move = function (direction) {
       if (tile) {
         var positions = self.findFarthestPosition(cell, vector);
         var next      = self.grid.cellContent(positions.next);
-
         // Only one merger per row traversal?
         if (next && next.value === tile.value && !next.mergedFrom) {
           var merged = new Tile(positions.next, tile.value * 2);
@@ -152,7 +152,7 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
                          
-                         
+              
           if(merged.value > localStorage.maxScore){
                          
             localStorage.maxScore = merged.value;
@@ -251,7 +251,6 @@ GameManager.prototype.tileMatchesAvailable = function () {
           var other  = self.grid.cellContent(cell);
 
           if (other && other.value === tile.value) {
-              
             return true; // These two tiles can be merged
           }
         }
