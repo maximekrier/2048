@@ -63,7 +63,8 @@ KeyboardInputManager.prototype.listen = function () {
       if (event.which === 32) self.restart.bind(self)(event);
     }
   });
-
+    
+    
   var retry = document.querySelector(".retry-button");
   retry.addEventListener("click", this.restart.bind(this));
   retry.addEventListener(this.eventTouchend, this.restart.bind(this));
@@ -71,7 +72,12 @@ KeyboardInputManager.prototype.listen = function () {
   var keepPlaying = document.querySelector(".keep-playing-button");
   keepPlaying.addEventListener("click", this.keepPlaying.bind(this));
   keepPlaying.addEventListener("touchend", this.keepPlaying.bind(this));
+    
+  var share = document.querySelector(".share-button");
+  share.addEventListener("click", this.share.bind(this));
+  share.addEventListener(this.eventTouchend, this.share.bind(this));
 
+    
   // Listen to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
@@ -122,6 +128,15 @@ KeyboardInputManager.prototype.listen = function () {
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
   this.emit("restart");
+};
+
+KeyboardInputManager.prototype.share = function (event) {
+    event.preventDefault();
+    this.emit("share");
+    
+    window.location.href = "sharefrom2048://";
+    
+    console.log( "sa mémé" );
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {

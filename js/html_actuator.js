@@ -3,14 +3,15 @@ function HTMLActuator() {
   this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
-
+    
   this.score = 0;
 }
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
-
+    
   window.requestAnimationFrame(function () {
+                               
     self.clearContainer(self.tileContainer);
 
     grid.cells.forEach(function (column) {
@@ -126,7 +127,7 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message = won ? "You win!" : "Game over!";
+  var message = won ? lang.youWin : lang.gameOver;
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;

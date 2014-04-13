@@ -35,6 +35,7 @@ GameManager.prototype.isGameTerminated = function () {
 
 // Set up the game
 GameManager.prototype.setup = function () {
+    
   this.grid        = new Grid(this.size);
 
   this.score       = 0;
@@ -52,11 +53,11 @@ GameManager.prototype.setup = function () {
 // Set up the initial tiles to start the game with
 GameManager.prototype.addStartTiles = function () {
   var startCells = [{x:0,y:0},{x:3,y:3},{x:3,y:0},{x:0,y:3}];
-
-  this.addCheatedRandomTile(2048,startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
-  this.addCheatedRandomTile(128);
-  this.addCheatedRandomTile(32);
-  this.addCheatedRandomTile(2);
+    
+    this.addCheatedRandomTile(localStorage.maxScore,startCells[Math.floor(Math.random() * (3 - 0 + 1) + 0)]);
+    this.addCheatedRandomTile(128);
+    this.addCheatedRandomTile(32);
+    this.addCheatedRandomTile(2);
 };
 
 //adds a cheated tile in a random ( or not :p ) position
@@ -150,7 +151,14 @@ GameManager.prototype.move = function (direction) {
 
           // Update the score
           self.score += merged.value;
-
+                         
+                         
+          if(merged.value > localStorage.maxScore){
+                         
+            localStorage.maxScore = merged.value;
+            window.location.href = "newmaxtile://";
+          }
+                         
           // The mighty 16384 tile
           if (merged.value === 16384) self.won = true;
         } else {
@@ -168,6 +176,7 @@ GameManager.prototype.move = function (direction) {
     this.addRandomTile();
 
     if (!this.movesAvailable()) {
+        window.location.href = "takescreenshot://";
       this.over = true; // Game over!
     }
 
@@ -242,6 +251,7 @@ GameManager.prototype.tileMatchesAvailable = function () {
           var other  = self.grid.cellContent(cell);
 
           if (other && other.value === tile.value) {
+              
             return true; // These two tiles can be merged
           }
         }
